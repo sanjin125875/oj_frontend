@@ -51,6 +51,7 @@
 
 <script setup lang="ts">
 import { reactive } from "vue";
+import { IconSafe, IconUser } from "@arco-design/web-vue/es/icon";
 import { UserControllerService, UserRegisterRequest } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
 import { useRouter } from "vue-router";
@@ -74,15 +75,19 @@ const handleSubmit = async () => {
     message.error("两次输入的密码不一致");
     return;
   }
-  const res = await UserControllerService.userRegisterUsingPost(form);
-  if (res.code === 0) {
-    message.success("注册成功，请登录");
-    router.push({
-      path: "/user/login",
-      replace: true,
-    });
-  } else {
-    message.error("注册失败，" + res.message);
+  try {
+    const res = await UserControllerService.userRegisterUsingPost(form);
+    if (res.code === 0) {
+      message.success("注册成功，请登录");
+      router.push({
+        path: "/user/login",
+        replace: true,
+      });
+    } else {
+      message.error("注册失败，" + res.message);
+    }
+  } catch (e: any) {
+    message.error("注册失败，请检查后端服务是否启动：" + (e?.message ?? e));
   }
 };
 </script>

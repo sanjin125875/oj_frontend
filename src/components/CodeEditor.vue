@@ -28,13 +28,13 @@ const props = withDefaults(defineProps<Props>(), {
 const codeEditorRef = ref();
 const codeEditor = ref();
 
-const fillValue = () => {
-  if (!codeEditor.value) {
-    return;
-  }
-  // 改变值
-  toRaw(codeEditor.value).setValue("新的值");
-};
+// const fillValue = () => {
+//   if (!codeEditor.value) {
+//     return;
+//   }
+//   // 改变值
+//   toRaw(codeEditor.value).setValue("新的值");
+// };
 
 onMounted(() => {
   if (!codeEditorRef.value) {

@@ -31,6 +31,14 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/login",
+    redirect: "/user/login",
+  },
+  {
+    path: "/register",
+    redirect: "/user/register",
+  },
+  {
     path: "/add/question",
     name: "创建题目",
     component: AddQuestionView,

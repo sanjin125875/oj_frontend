@@ -42,9 +42,10 @@
 
 <script setup lang="ts">
 import { reactive } from "vue";
+import { IconLock, IconUser } from "@arco-design/web-vue/es/icon";
 import { UserControllerService, UserLoginRequest } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 /**
@@ -56,6 +57,7 @@ const form = reactive({
 } as UserLoginRequest);
 
 const router = useRouter();
+const route = useRoute();
 const store = useStore();
 
 /**
@@ -63,17 +65,23 @@ const store = useStore();
  * @param data
  */
 const handleSubmit = async () => {
-  const res = await UserControllerService.userLoginUsingPost(form);
-  // 登录成功，跳转到主页
-  if (res.code === 0) {
-    await store.dispatch("user/getLoginUser");
-    message.success("登录成功");
-    router.push({
-      path: "/",
-      replace: true,
-    });
-  } else {
-    message.error("登陆失败，" + res.message);
+  try {
+    const res = await UserControllerService.userLoginUsingPost(form);
+    // 登录成功，跳转到主页
+    if (res.code === 0) {
+      await store.dispatch("user/getLoginUser");
+      message.success("登录成功");
+      // 支持登录后回到来源页，默认回到首页
+      const redirect = route.query.redirect as string;
+      router.push({
+        path: redirect && redirect.startsWith("/") ? redirect : "/",
+        replace: true,
+      });
+    } else {
+      message.error("登陆失败，" + res.message);
+    }
+  } catch (e: any) {
+    message.error("登录失败，请检查后端服务是否启动：" + (e?.message ?? e));
   }
 };
 </script>
