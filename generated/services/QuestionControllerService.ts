@@ -97,7 +97,7 @@ id?: number,
 ): CancelablePromise<BaseResponse_Question_> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/question/get',
+            url: '/api/question/get/vo',
             query: {
                 'id': id,
             },

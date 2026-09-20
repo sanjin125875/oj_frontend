@@ -192,30 +192,22 @@ const loadData = async () => {
   );
   if (res.code === 0) {
     form.value = res.data as any;
-    // json 转 js 对象
-    if (!form.value.judgeCase) {
-      form.value.judgeCase = [
-        {
-          input: "",
-          output: "",
-        },
-      ];
-    } else {
-      form.value.judgeCase = JSON.parse(form.value.judgeCase as any);
+
+    // 后端已返回数组，直接兜底即可，无需 JSON.parse
+    if (!form.value.judgeCase || form.value.judgeCase.length === 0) {
+      form.value.judgeCase = [{ input: "", output: "" }];
     }
+
     if (!form.value.judgeConfig) {
       form.value.judgeConfig = {
         memoryLimit: 1000,
         stackLimit: 1000,
         timeLimit: 1000,
       };
-    } else {
-      form.value.judgeConfig = JSON.parse(form.value.judgeConfig as any);
     }
+
     if (!form.value.tags) {
       form.value.tags = [];
-    } else {
-      form.value.tags = JSON.parse(form.value.tags as any);
     }
   } else {
     message.error("加载失败，" + res.message);
