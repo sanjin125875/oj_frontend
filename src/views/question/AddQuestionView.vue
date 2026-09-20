@@ -160,19 +160,21 @@ const route = useRoute();
 const updatePage = route.path.includes("update");
 
 let form = ref({
-  title: "",
-  tags: [],
-  answer: "",
-  content: "",
+  title: "", // 标题
+  tags: [], // 标签
+  answer: "", // 答案
+  content: "", // 内容
+  // 判题配置
   judgeConfig: {
-    memoryLimit: 1000,
-    stackLimit: 1000,
-    timeLimit: 1000,
+    memoryLimit: 1000, // 内存限制
+    stackLimit: 1000, // 栈限制
+    timeLimit: 1000, // 时间限制
   },
+  // 测试用例
   judgeCase: [
     {
-      input: "",
-      output: "",
+      input: "", // 输入
+      output: "", // 输出
     },
   ],
 });
