@@ -103,9 +103,16 @@ const onPageChange = (page: number) => {
 
 const columns = [
   {
-    title: "id",
-    dataIndex: "id",
+    title: "序号",
     width: 80,
+    // 用 render 计算序号：第几页 * 每页条数 + 行索引 + 1
+    render: ({ rowIndex }: { rowIndex: number }) => {
+      return (
+        (searchParams.value.pageNum - 1) * searchParams.value.pageSize +
+        rowIndex +
+        1
+      );
+    },
   },
   {
     title: "标题",
