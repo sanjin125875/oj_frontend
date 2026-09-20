@@ -5,6 +5,10 @@
 
 export type QuestionSubmitAddRequest = {
     code?: string;
+    current?: number;
     language?: string;
+    pageSize?: number;
     questionId?: number;
+    sortField?: string;
+    sortOrder?: string;
 };
