@@ -187,7 +187,7 @@ const loadData = async () => {
   if (!id) {
     return;
   }
-  const res = await QuestionControllerService.getQuestionByIdUsingGet(
+  const res = await QuestionControllerService.getQuestionVoByIdUsingGet(
     id as any
   );
   if (res.code === 0) {
