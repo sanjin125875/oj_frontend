@@ -196,6 +196,8 @@ const loadData = async () => {
     // 后端已返回数组，直接兜底即可，无需 JSON.parse
     if (!form.value.judgeCase || form.value.judgeCase.length === 0) {
       form.value.judgeCase = [{ input: "", output: "" }];
+    } else {
+      form.value.judgeCase = JSON.parse(form.value.judgeCase as any);
     }
 
     if (!form.value.judgeConfig) {
