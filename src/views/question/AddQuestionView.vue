@@ -210,6 +210,8 @@ const loadData = async () => {
 
     if (!form.value.tags) {
       form.value.tags = [];
+    } else {
+      form.value.tags = JSON.parse(form.value.tags as any);
     }
   } else {
     message.error("加载失败，" + res.message);
