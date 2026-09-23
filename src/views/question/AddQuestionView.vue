@@ -206,6 +206,8 @@ const loadData = async () => {
         stackLimit: 1000,
         timeLimit: 1000,
       };
+    }
+
     if (!form.value.tags) {
       form.value.tags = [];
     } else {
@@ -213,6 +215,7 @@ const loadData = async () => {
     }
   } else {
     message.error("加载失败，" + res.message);
+  }
 };
 
 onMounted(() => {
