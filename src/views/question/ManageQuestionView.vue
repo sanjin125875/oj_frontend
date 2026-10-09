@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { IconPlus } from "@arco-design/web-vue/es/icon";
 import { Question, QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
@@ -84,21 +84,21 @@ const loadData = async () => {
 };
 
 /**
- * 页面加载时，请求数据
+ * watchEffect 监听 searchParams 的变化，自动重新加载数据
+ * （首次会立即执行一次，页号变化 / 搜索条件变化时都会触发）
  */
-onMounted(() => {
+watchEffect(() => {
   loadData();
 });
 
 /**
- * 分页切换
+ * 分页切换：只修改 searchParams，由 watchEffect 触发数据重新加载
  */
 const onPageChange = (page: number) => {
   searchParams.value = {
     ...searchParams.value,
     pageNum: page,
   };
-  loadData();
 };
 
 const columns = [

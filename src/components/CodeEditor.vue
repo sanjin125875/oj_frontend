@@ -5,13 +5,14 @@
 
 <script setup lang="ts">
 import * as monaco from "monaco-editor";
-import { onMounted, ref, toRaw, withDefaults, defineProps } from "vue";
+import { onMounted, ref, toRaw, watch, withDefaults, defineProps } from "vue";
 
 /**
  * 定义组件属性类型
  */
 interface Props {
   value: string;
+  language?: string;
   handleChange: (v: string) => void;
 }
 
@@ -20,6 +21,7 @@ interface Props {
  */
 const props = withDefaults(defineProps<Props>(), {
   value: () => "",
+  language: () => "java",
   handleChange: (v: string) => {
     console.log(v);
   },
@@ -27,6 +29,20 @@ const props = withDefaults(defineProps<Props>(), {
 
 const codeEditorRef = ref();
 const codeEditor = ref();
+
+// 监听 language 属性变化（监听 props 要使用箭头函数），动态切换编辑器语言
+watch(
+  () => props.language,
+  (newLanguage) => {
+    if (!codeEditor.value) {
+      return;
+    }
+    const model = toRaw(codeEditor.value).getModel();
+    if (model) {
+      monaco.editor.setModelLanguage(model, newLanguage ?? "java");
+    }
+  }
+);
 
 // const fillValue = () => {
 //   if (!codeEditor.value) {
@@ -43,7 +59,7 @@ onMounted(() => {
   // Hover on each property to see its docs!
   codeEditor.value = monaco.editor.create(codeEditorRef.value, {
     value: props.value,
-    language: "java",
+    language: props.language,
     automaticLayout: true,
     colorDecorators: true,
     minimap: {

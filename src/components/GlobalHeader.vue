@@ -115,6 +115,10 @@ const doLogout = async () => {
 // 展示在菜单的路由数组
 const visibleRoutes = computed(() => {
   return routes.filter((item) => {
+    // 无 name 的路由（如重定向路由）不在菜单中展示
+    if (!item.name) {
+      return false;
+    }
     if (item.meta?.hideInMenu) {
       return false;
     }
