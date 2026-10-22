@@ -116,7 +116,7 @@ id?: number,
      * @throws ApiError
      */
     public static getQuestionVoByIdUsingGet(
-id?: number,
+id?: string,
 ): CancelablePromise<BaseResponse_QuestionVO_> {
         return __request(OpenAPI, {
             method: 'GET',

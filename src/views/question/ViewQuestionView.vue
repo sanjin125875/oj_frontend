@@ -108,7 +108,7 @@ const loadData = async () => {
     return;
   }
   const res = await QuestionControllerService.getQuestionVoByIdUsingGet(
-    Number(props.id)
+    props.id as string
   );
   if (res.code === 0) {
     question.value = res.data ?? {};
