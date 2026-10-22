@@ -8,7 +8,7 @@ export type QuestionSubmitAddRequest = {
     current?: number;
     language?: string;
     pageSize?: number;
-    questionId?: number;
+    questionId?: string;
     sortField?: string;
     sortOrder?: string;
 };

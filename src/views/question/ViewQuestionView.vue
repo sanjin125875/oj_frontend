@@ -134,7 +134,7 @@ const doSubmit = async () => {
     return;
   }
   const res = await QuestionSubmitControllerService.doQuestionSubmitUsingPost({
-    questionId: Number(props.id),
+    questionId: props.id as string,
     language: language.value,
     code: code.value,
   } as any);
