@@ -31,7 +31,7 @@
         :pagination="{
           showTotal: true,
           pageSize: searchParams.pageSize,
-          current: searchParams.pageNum,
+          current: searchParams.current,
           total,
         }"
         @page-change="onPageChange"
@@ -48,7 +48,9 @@
           </a-space>
         </template>
         <template #acceptRate="{ record }">
-          {{ calcAcceptRate(record) }}
+          {{ calcAcceptRate(record) }} / ({{ record.acceptedNum }}/{{
+            record.submitNum
+          }})
         </template>
         <template #createTime="{ record }">
           {{ moment(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
@@ -83,7 +85,7 @@ const total = ref(0);
 const searchParams = ref({
   title: "",
   tags: [],
-  pageNum: 1,
+  current: 1,
   pageSize: 10,
 });
 
@@ -113,7 +115,7 @@ watchEffect(() => {
 const doSearch = () => {
   searchParams.value = {
     ...searchParams.value,
-    pageNum: 1,
+    current: 1,
   };
 };
 
@@ -123,7 +125,7 @@ const doSearch = () => {
 const onPageChange = (page: number) => {
   searchParams.value = {
     ...searchParams.value,
-    pageNum: page,
+    current: page,
   };
 };
 
